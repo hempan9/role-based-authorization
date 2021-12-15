@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Arrays;
@@ -20,11 +21,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private BCryptPasswordEncoder encoder;
+    private PasswordEncoder passwordEncoder;
     @PostMapping(value = "/join")
     public String joinGroup(@RequestBody User user){
         user.setRoles(UserConstant.DEFAULT_ROLE);
-        String encryptedPassword = encoder.encode(user.getPassword());
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
         userRepository.save(user);
         return "Hi "+user.getUserName()+" welcome to group.";
@@ -64,7 +65,7 @@ public class UserController {
     }
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @Secured("ROLE_ADMIN")
+    //@Secured("ROLE_ADMIN")
 
     public List<User> loadUsers(){
         return userRepository.findAll();
@@ -72,7 +73,6 @@ public class UserController {
 
     @GetMapping("/test")
     //@PreAuthorize("hasAuthority('ROLE_USER')")
-
     @Secured("ROLE_USER")
     public String testUserAccess(){
         return "user can only access it";

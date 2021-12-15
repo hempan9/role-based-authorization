@@ -14,7 +14,6 @@
 	<name>role-based-authorization</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -67,6 +66,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>role-based-docker-app</finalName>
 	</build>
 
 </project>

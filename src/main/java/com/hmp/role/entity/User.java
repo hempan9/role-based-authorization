@@ -19,9 +19,7 @@ import javax.persistence.Table;
 public class User {
     @Id
     @GeneratedValue
-
     private int id;
-
     private String userName;
     private String password;
     private boolean isActive;
